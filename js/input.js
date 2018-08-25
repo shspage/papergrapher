@@ -87,7 +87,11 @@ pg.input = function() {
 			// space / pan tool
 			if(event.keyCode === 32 && !userIsTyping(event)) {
 				event.preventDefault();
-				pg.toolbar.switchTool('viewgrab');
+				if(pg.toolbar.getActiveTool().options.id === 'bezier') {
+					// move current point while dragging
+				} else {
+					pg.toolbar.switchTool('viewgrab');
+				}
 			}
 		});
 
@@ -115,7 +119,10 @@ pg.input = function() {
 
 			// space : stop pan tool on keyup
 			if(event.keyCode === 32) {
-				if(!isModifierKeyDown(event)) {
+				if(pg.toolbar.getActiveTool().options.id === 'bezier') {
+					event.preventDefault();
+					// move current point while dragging
+				} else if(!isModifierKeyDown(event)) {
 					event.preventDefault();
 					pg.toolbar.switchTool(pg.toolbar.getPreviousTool().options.id);
 				}

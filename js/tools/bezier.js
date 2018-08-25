@@ -137,11 +137,15 @@ pg.tools.bezier = function() {
 			if(event.event.button > 0) return;  // only first mouse button
 			
 			var delta = event.delta.clone();
-			if (type === 'handleOut' || mode === 'add') {
-				delta = -delta;
+			if(event.modifiers.space) {
+				currentSegment.point += delta;
+			} else {
+				if (type === 'handleOut' || mode === 'add') {
+					delta = -delta;
+				}
+				currentSegment.handleIn += delta;
+				currentSegment.handleOut -= delta;
 			}
-			currentSegment.handleIn += delta;
-			currentSegment.handleOut -= delta;
 		};
 		
 		tool.onMouseUp = function(event) {
@@ -153,7 +157,6 @@ pg.tools.bezier = function() {
 			}
 			
 		};
-		
 		
 		
 		tool.activate();
