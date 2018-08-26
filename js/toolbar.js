@@ -4,6 +4,7 @@ pg.toolbar = function() {
 		
 	var activeTool;
 	var previousTool;
+	var previousSelectTool;
 	
 	var setup = function() {
 		setupToolList();
@@ -51,6 +52,9 @@ pg.toolbar = function() {
 		return previousTool;
 	};
 
+	var getPreviousSelectTool = function() {
+		return previousSelectTool;
+	};
 
 	var switchTool = function(toolID, forced) {
 		try {
@@ -73,6 +77,9 @@ pg.toolbar = function() {
 			//that is only useful/wanted for toolbar items
 			if(activeTool && activeTool.options.type !== 'hidden') {
 				previousTool = activeTool;
+				if(activeTool.options.id === "select" || activeTool.options.id === "detailselect"){
+					previousSelectTool = activeTool;
+				}
 			}
 			resetTools();
 			pg.stylebar.sanitizeSettings();
@@ -111,6 +118,7 @@ pg.toolbar = function() {
 		setup: setup,
 		getActiveTool: getActiveTool,
 		getPreviousTool: getPreviousTool,
+		getPreviousSelectTool: getPreviousSelectTool,
 		switchTool: switchTool,
 		resetTools: resetTools,
 		setDefaultTool: setDefaultTool

@@ -84,6 +84,13 @@ pg.input = function() {
 				pg.stylebar.blurInputs();
 			}
 
+			// ctrl
+			if(event.keyCode === 17 && !userIsTyping(event)){
+				event.preventDefault();
+				var preSelectTool = pg.toolbar.getPreviousSelectTool();
+				pg.toolbar.switchTool(preSelectTool ? preSelectTool.options.id : 'select', true);
+			}
+
 			// space / pan tool
 			if(event.keyCode === 32 && !userIsTyping(event)) {
 				event.preventDefault();
@@ -116,6 +123,11 @@ pg.input = function() {
 			
 			if(userIsTyping(event)) return;
 
+			// ctrl
+			if(event.keyCode === 17){
+				event.preventDefault();
+				pg.toolbar.switchTool(pg.toolbar.getPreviousTool().options.id);
+			}
 
 			// space : stop pan tool on keyup
 			if(event.keyCode === 32) {
